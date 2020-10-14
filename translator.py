@@ -3,6 +3,7 @@
 # made by JaeHeon Jeong (SKKU)
 
 from googletrans import Translator
+from hanspell import spell_checker
 
 translator = Translator()
 
@@ -24,6 +25,10 @@ def main() :
     interval = check_index(content)[1]-check_index(content)[0]
 
     for i in range(start, end, interval) :
-        print(translator.translate(content[i], dest='ko').text);print()
+        sentence=translator.translate(content[i], dest='ko').text
+        spell_checked=spell_checker.check(translator.translate(content[i], dest='ko').text).checked
 
+        print(sentence)
+        print(spell_checked)
+        print()
 main()

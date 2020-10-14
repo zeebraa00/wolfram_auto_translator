@@ -6,3 +6,4 @@ made by JaeHeon Jeong (SKKU)
 
 ## used API
 1. googletrans
+2. hanspell
