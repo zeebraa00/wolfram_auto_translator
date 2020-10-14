@@ -1,2 +1,4 @@
 # wolfram_auto_translator
-Wolfram U scripts auto translator using python and google translator API
+Auto translator for wolfram U localization project (using python, google translator API)
+
+made by JaeHeon Jeong (SKKU)
