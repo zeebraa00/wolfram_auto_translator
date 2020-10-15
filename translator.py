@@ -18,16 +18,19 @@ def check_index(content) :
                 return record       
 
 def main() :
-    print()
-    print("Input 0 to exit")
-    print("Note : your source files must be located at same directory with translator.py")
-    print()
+    print("*"*40);print()
+    print("=> Input 0 to exit")
+    print("=> Note : your source files must be located at same directory with translator.py")
+    print();print("*"*40)
     while (True) :
-        source_name = input("input the name of source file including .srt to translate : ")
-        if (source_name==0) :
+        source_name = input("\ninput the name of source file including .srt to translate : ")
+        if (source_name=="0") :
             break
-
-        source = open(source_name, "r")
+        try :
+            source = open(source_name, "r")
+        except :
+            print("no such file")
+            continue
         target = open("result_"+source_name, "w")
         content = source.read().split("\n")
 
@@ -37,10 +40,14 @@ def main() :
 
         for i in range(end) :
             if (i % interval == start) :
-                sentence=translator.translate(content[i], dest='ja').text
-                spell_checked=spell_checker.check(translator.translate(content[i], dest='ko').text).checked
-                target.write(content[i]+"\n")
-                target.write(spell_checked+"\n")
+                try :
+                    sentence=translator.translate(content[i], dest='ko').text
+                    spell_checked=spell_checker.check(translator.translate(content[i], dest='ko').text).checked
+                    target.write(content[i]+"\n")
+                    target.write(spell_checked+"\n")
+                    print("Translation completed on line",content[i-2])
+                except :
+                    print("error occured at :", content[i-2])
             else :
                 target.write(content[i]+"\n")
             
