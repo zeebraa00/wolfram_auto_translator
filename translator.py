@@ -18,17 +18,31 @@ def check_index(content) :
                 return record       
 
 def main() :
-    source = open('source.srt', "r")
-    content = source.read().split("\n")
-    start = check_index(content)[0]+1
-    end = len(content)
-    interval = check_index(content)[1]-check_index(content)[0]
+    print()
+    print("Input 0 to exit")
+    print("Note : your source files must be located at same directory with translator.py")
+    print()
+    while (True) :
+        source_name = input("input the name of source file including .srt to translate : ")
+        if (source_name==0) :
+            break
 
-    for i in range(start, end, interval) :
-        sentence=translator.translate(content[i], dest='ko').text
-        spell_checked=spell_checker.check(translator.translate(content[i], dest='ko').text).checked
+        source = open(source_name, "r")
+        target = open("result_"+source_name, "w")
+        content = source.read().split("\n")
 
-        print(sentence)
-        print(spell_checked)
-        print()
-main()
+        start = check_index(content)[0]+1
+        end = len(content)
+        interval = check_index(content)[1]-check_index(content)[0]
+
+        for i in range(end) :
+            if (i % interval == start) :
+                sentence=translator.translate(content[i], dest='ja').text
+                spell_checked=spell_checker.check(translator.translate(content[i], dest='ko').text).checked
+                target.write(content[i]+"\n")
+                target.write(spell_checked+"\n")
+            else :
+                target.write(content[i]+"\n")
+            
+if __name__ == "__main__":
+    main()
